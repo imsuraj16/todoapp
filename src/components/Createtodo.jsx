@@ -6,7 +6,7 @@ const Createtodo = ({todo,settodo}) => {
 
   const addTaskHandler = (e) => {
     e.preventDefault();
-    settodo([...todo, { title: title, id: nanoid() }]);
+    settodo((prev)=>[...prev,{title:title,id:nanoid()}]);
     settitle("")
   };
   return (
