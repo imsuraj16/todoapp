@@ -1,25 +1,38 @@
 import React, { useState } from "react";
 import { nanoid } from "nanoid";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
-const Createtodo = ({todo,settodo}) => {
-  const [title, settitle] = useState("");
+const Createtodo = ({ todo, settodo }) => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  const addTaskHandler = (e) => {
-    e.preventDefault();
-    settodo((prev)=>[...prev,{title:title,id:nanoid()}]);
-    settitle("")
+  const addTaskHandler = (data) => {
+    data.id = nanoid();
+    settodo((prev) => [...prev, data]);
+    reset();
+    toast.success("todo created!");
   };
+  // console.log(errors);
+
   return (
     <>
-      <form className="flex gap-10" onSubmit={addTaskHandler}>
+      <form onSubmit={handleSubmit(addTaskHandler)}>
         <input
           className="border-b border-gray-500 outline-none"
           type="text"
           placeholder="enter your task..."
-          onChange={(e) => settitle(e.target.value)}
-          value={title}
+          {...register("title", { required: "title cannot be empty.." })}
         />
-        <button className="border-2 border-gray-600 px-4 py-1 rounded-lg">Add task</button>
+        <h1 className="text-red-500">{errors?.title?.message}</h1>
+        <br />
+        <button className="border-2 border-gray-600 px-4 py-1 rounded-lg w-fit">
+          Add task
+        </button>
       </form>
     </>
   );
