@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { nanoid } from "nanoid";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { todoContext } from "../context/Context";
 
-const Createtodo = ({ todo, settodo }) => {
+const Createtodo = () => {
+
+  const [todo,settodo] = useContext(todoContext)
   const {
     register,
     handleSubmit,

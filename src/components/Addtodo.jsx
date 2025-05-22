@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { toast } from "react-toastify";
+import { todoContext } from "../context/Context";
 
-const Addtodo = ({ todo, settodo }) => {
+const Addtodo = () => {
+  
+  const [todo, settodo] = useContext(todoContext);
+
   const deleteHandler = (id) => {
     let newtodo = todo.filter((item) => item.id !== id);
     settodo(newtodo);
